@@ -1,0 +1,43 @@
+<h1>Todos</h1>
+
+<div>
+  <%= link_to 'All' , todos_path ,class: "btn btn-default" %>
+  <%= link_to 'Active Tasks' , active_todos_path   ,class: "btn btn-default" %>
+  <%= link_to 'Completed Tasks' , completed_todos_path ,class: "btn btn-default" %>
+</div>
+
+<div class="ref">
+  <% if @todos.count > 0 %>
+    <table class="table table-striped table-dark">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="text-center">Title</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @todos.each do |todo| %>
+            <tr>
+              <td>
+                <%= link_to mark_complete_todo_path(todo), class: "marker" do %> 
+                  <%= check_box_tag "completed", nil, todo.completed %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to mark_complete_todo_path(todo), class: "marker" do %> 
+                  <span class="<%= todo.completed ? "completed" : "active" %>"><%= todo.title %></span>
+                <% end %>
+              </td>
+
+              <td><%= link_to 'X', todo, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-danger" %></td>
+            </tr>
+        <% end %>
+      </tbody>
+  </table>
+<% else %>
+   <span>No todos found. Create new ones and turn your life around!</span>
+<% end %>
+</div> 
+
+<br>
